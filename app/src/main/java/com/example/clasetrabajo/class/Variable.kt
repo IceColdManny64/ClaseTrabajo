@@ -33,6 +33,10 @@ fun main(){
     //invocar funcion y pasar parametros
     println(product(5, 5))
     printArray(names)
+
+    val numbers = arrayOf(1,2,3,4,5,6,7,8,9,10)
+    isEven(numbers)
+
 }
 
 fun add():Int{ //indicar tipo de dato de retorno
@@ -54,5 +58,15 @@ fun printArray(names:Array<String>){
     //Se asigna una variable name a cada elemento
     for(name in names){
         println("Hola $name")
+    }
+}
+
+fun isEven(numbers:Array<Int>){
+    for(number in numbers){
+        if(number % 2 == 0){
+            println("the number $number is even")
+        } else {
+            println("the number $number is uneven/odd")
+        }
     }
 }
