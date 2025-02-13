@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -20,11 +21,14 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -33,6 +37,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.clasetrabajo.ui.screens.MainMenuScreen
 import com.example.clasetrabajo.ui.theme.ClaseTrabajoTheme
 
 class MainActivity : ComponentActivity() {
@@ -43,9 +52,10 @@ class MainActivity : ComponentActivity() {
 
         //screen interface content
         setContent {
+            ComposeMultiScreenApp()
             //theme function
             ClaseTrabajoTheme {
-                Column() {
+                /*Column() {
                     Column(){
                         TextComposable("Carlos")
                         TextComposable()
@@ -62,12 +72,12 @@ class MainActivity : ComponentActivity() {
                         ModifierExample1()
                         ModifierExample2()
                         //Comment if the screen ran out of space
-                        ModifierExample3()
-                        ModifierExample4()
+                        //ModifierExample3()
+                        //ModifierExample4()
                         CustomText()
-
+                        picture()
                     }
-                }
+                }*/
             }
         }
     }
@@ -174,6 +184,39 @@ class MainActivity : ComponentActivity() {
                 style = TextStyle(brush = Brush.horizontalGradient(colors = gradientColors))
             )
         }
+    }
+    @Preview(showBackground = true)
+    @Composable
+    fun picture(){
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(Color.Black)
+                .height(300.dp)
+        ){
+           Image(
+               modifier = Modifier
+                   .fillMaxWidth(),
+               painter = painterResource(R.drawable.audi),
+               //for accesibility purposes, images should have a brief description
+               contentDescription = "Un vehículo Audi",
+               contentScale = ContentScale.Crop
+
+           )
+        }
+    }
+} //Close class
+@Composable
+fun ComposeMultiScreenApp(){
+    val navController = rememberNavController()
+    SetupNavGraph(navController = navController)
+}
+@Composable
+fun SetupNavGraph(navController: NavHostController){
+    //startDestinations marks which screen is going to open at launch
+    NavHost(navController = navController, startDestination = "mainMenu"){
+        //add route name for every screen
+        composable("mainMenu"){ MainMenuScreen(navController) }
     }
 }
 
