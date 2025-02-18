@@ -5,6 +5,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -109,18 +110,21 @@ fun Content2() {
         Row() {
             Image(
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .fillMaxHeight()
                     .width(80.dp)
-                    .height(100.dp),
+                    .size(100.dp)
+                    .height(200.dp),
                 painter = painterResource(R.drawable.audi),
                 contentDescription = "Audi TTS",
-                contentScale = ContentScale.Inside
+                contentScale = ContentScale.Crop,
+
             )
-        }
-        Column() {
+
+            Column() {
                 Text(
                     text = "This is a title",
                     fontSize = 12.sp,
+                    textAlign = TextAlign.Left,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier
                         .padding(5.dp)
@@ -133,6 +137,7 @@ fun Content2() {
                     modifier = Modifier.padding(10.dp)
                 )
             }
+        }
         }
     }
 @Preview

@@ -19,6 +19,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.TopStart
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -30,6 +31,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -41,11 +43,21 @@ import com.example.clasetrabajo.ui.theme.ClaseTrabajoTheme
 @Composable
 fun TestScreen(navController: NavHostController){
     Column() {
+
                     Column(){
+                        Column(
+                            modifier = Modifier
+                                .padding(2.dp, 10.dp, 0.dp, 10.dp)
+
+
+                        ){
+                            Text("Test Screen")
+                        }
                         TextComposable("Carlos")
                         TextComposable()
                         TextComposable()
                         TextComposable()
+
                     }
                     Row(){
                         TextComposable()
@@ -62,24 +74,11 @@ fun TestScreen(navController: NavHostController){
                         CustomText()
                         Picture()
                     }
-                }
-    Column(
-        modifier = Modifier
-            .padding(2.dp)
-            .fillMaxSize()
-
-    ){
-
-        Text("Test Screen")
         Button(
-
             onClick = {navController.navigate("mainMenu")}
             /*need to align the button to the bottom so it doesn't appear on top
             of the content*/
-                    //Modifier.align(Alignment.TopStart)
-
-
-
+            //Modifier.align(Alignment.TopStart)
         )
         {
             Text("Return to Main Menu")
@@ -91,7 +90,9 @@ fun TestScreen(navController: NavHostController){
         {
             Text("Go to Home Screen")
         }
+
     }
+
 }
 @Composable
 fun TextComposable(name:String = "Empty"){
