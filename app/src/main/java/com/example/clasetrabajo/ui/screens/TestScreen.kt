@@ -15,6 +15,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -42,7 +44,10 @@ import com.example.clasetrabajo.ui.theme.ClaseTrabajoTheme
 
 @Composable
 fun TestScreen(navController: NavHostController){
-    Column() {
+    Column(
+        modifier = Modifier
+            .verticalScroll(rememberScrollState())
+    ) {
 
                     Column(){
                         Column(
@@ -69,8 +74,8 @@ fun TestScreen(navController: NavHostController){
                         ModifierExample1()
                         ModifierExample2()
                         //Comment if the screen ran out of space
-                        //ModifierExample3()
-                        //ModifierExample4()
+                        ModifierExample3()
+                        ModifierExample4()
                         CustomText()
                         Picture()
                     }
