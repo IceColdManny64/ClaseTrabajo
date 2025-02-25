@@ -3,4 +3,16 @@
     //sync gradle to save changes
     <string name="sample_text">Hello World from Strings.xml</string>
     <string name= "lorem">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...</string>
+    <string name="screen_title">Inicio</string>
+    <string name="recents_text">Escuchado recientemente</string>
+    <string name="album1_title">Metaphorical Music</string>
+    <string name="album1_artist">Nujabes</string>
+    <string name="fav_songs">Canciones favoritas</string>
+    <string name="beatles_world">El mundo de The Beatles</string>
+    <string name="album2_title">Get Back: The Rooftop...</string>
+    <string name="album3_title">Please Please Me</string>
+    <string name="beatles_artist">The Beatles</string>
+    <string name="song1_title">F.I.L.O. (feat. Shing02)</string>
+
+
 </resources>

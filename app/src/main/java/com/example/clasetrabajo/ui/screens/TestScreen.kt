@@ -81,9 +81,7 @@ fun TestScreen(navController: NavHostController){
                     }
         Button(
             onClick = {navController.navigate("mainMenu")}
-            /*need to align the button to the bottom so it doesn't appear on top
-            of the content*/
-            //Modifier.align(Alignment.TopStart)
+
         )
         {
             Text("Return to Main Menu")
