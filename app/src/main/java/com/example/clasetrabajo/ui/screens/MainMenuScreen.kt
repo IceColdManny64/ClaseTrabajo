@@ -39,5 +39,11 @@ fun MainMenuScreen(navController: NavHostController){
         {
             Text("Go to App Screen")
         }
+        Button(
+            onClick = {navController.navigate("componentsScreen")}
+        )
+        {
+            Text("Go to Components Screen")
+        }
     }
 }
