@@ -13,13 +13,20 @@ import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
+import androidx.compose.material3.Badge
+import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.FilterChip
@@ -31,8 +38,9 @@ import androidx.compose.material3.LargeFloatingActionButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Slider
-import androidx.compose.material3.SliderPositions
 import androidx.compose.material3.SmallFloatingActionButton
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -40,13 +48,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import kotlinx.coroutines.launch
 import java.util.logging.Filter
 
 @Composable
@@ -56,7 +68,10 @@ fun ComponentsScreen(navController: NavHostController){
     //Progress()
     //Chips()
     //Sliders()
-    Switches()
+    //Switches()
+    //Badges()
+    //SnackBars()
+    AlertDialogs()
     }
 //@Preview(showBackground = true)
 @Composable
@@ -277,5 +292,117 @@ fun Switches() {
             checked = checked3,
             onCheckedChange = {checked3 = it}
         )
+    }
+}
+//@Preview
+@Composable
+fun Badges() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceEvenly
+
+    ) {
+        var itemCount by remember { mutableStateOf(0) }
+        BadgedBox(
+            badge = {
+                if (itemCount > 0){
+                    Badge(
+                        containerColor = Color.Red,
+                        contentColor = Color.White
+                    )
+                    {
+                        Text(itemCount.toString())
+                    }
+                }
+            }
+        ) {
+            Icon(
+                imageVector = Icons.Filled.ShoppingCart,
+                contentDescription = "Shopping Cart icon"
+            )
+        }
+        Button(
+            onClick = {itemCount++}
+        ) {
+            Text("Add item")
+        }
+    }
+}
+//@Preview
+@Composable
+fun SnackBars() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceEvenly
+
+    ) {
+        //val = static
+        //var = non static
+        val snackState = remember { SnackbarHostState() }
+        val snackScope = rememberCoroutineScope()
+
+        SnackbarHost(hostState = snackState)
+
+        fun launchSnackBar(){
+            snackScope.launch { snackState.showSnackbar("The message was sent") }
+        }
+        //invoking the previous function in a shorter way
+        Button(::launchSnackBar){
+            Text("Send Message")
+        }
+    }
+}
+@OptIn(ExperimentalMaterial3Api::class)
+@Preview
+@Composable
+fun AlertDialogs() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceEvenly
+
+    ) {
+        var showAlertDialog by remember { mutableStateOf(false) }
+        var selectedOption by remember { mutableStateOf("") }
+
+        //without "== true" statement, the conditional is checking for the var to be true
+        if(showAlertDialog){
+            AlertDialog(
+                icon = {Icon(Icons.Filled.Info, contentDescription = "Info Icon")},
+                title = { Text("Confirm Deletion") },
+                text = { Text("Do you really want to delete this file?") },
+                //to close the dialog when clicking any part of the screen that is not the Alert Dialog
+                onDismissRequest = {},
+                confirmButton = {
+                    TextButton(
+                        onClick = {
+                            selectedOption = "Confirmed"
+                            showAlertDialog = false
+                        }
+                    ) {
+                        Text("Yes")
+                    }
+                },
+                dismissButton = {
+                    TextButton(
+                        onClick = {
+                            selectedOption = "Canceled"
+                            showAlertDialog = false
+                        }
+                    ) {
+                        Text("No")
+                    }
+                }
+            )
+        }
+        Button(onClick = {showAlertDialog = true}) {
+            Text("Delete File")
+        }
+        Text(selectedOption)
     }
 }

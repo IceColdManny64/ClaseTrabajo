@@ -33,12 +33,12 @@ fun MainMenuScreen(navController: NavHostController){
         {
             Text("Go to Test Screen")
         }
-        Button(
+        /*Button(
             onClick = {navController.navigate("amScreen")}
         )
         {
             Text("Go to App Screen")
-        }
+        }*/
         Button(
             onClick = {navController.navigate("componentsScreen")}
         )
