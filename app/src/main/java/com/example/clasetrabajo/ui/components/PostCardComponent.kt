@@ -2,9 +2,14 @@ package com.example.clasetrabajo.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -52,5 +57,46 @@ fun PostCardComponent(id:Int, title:String, text:String, image:Int){
             modifier = Modifier.padding(10.dp)
         )
 
+    }
+}
+@Composable
+fun PostCardCompactComponent(id:Int, title:String, text:String, image:Int) {
+    Card(
+        modifier = Modifier
+            .background(Color.Blue)
+            .fillMaxWidth()
+            .padding(5.dp)
+    ) {
+        Row() {
+            Image(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .width(80.dp)
+                    .size(100.dp)
+                    .height(200.dp),
+                painter = painterResource(image),
+                contentDescription = "Audi TTS",
+                contentScale = ContentScale.Crop,
+
+                )
+
+            Column() {
+                Text(
+                    text = title,
+                    fontSize = 12.sp,
+                    textAlign = TextAlign.Left,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier
+                        .padding(5.dp)
+                )
+                Text(
+                    text = text,
+                    textAlign = TextAlign.Left,
+                    lineHeight = 14.sp,
+                    fontSize = 10.sp,
+                    modifier = Modifier.padding(10.dp)
+                )
+            }
+        }
     }
 }
