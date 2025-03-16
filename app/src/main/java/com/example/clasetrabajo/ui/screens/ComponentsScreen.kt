@@ -43,6 +43,7 @@ import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.BottomAppBarDefaults
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
@@ -60,7 +61,7 @@ import androidx.compose.material3.InputChip
 import androidx.compose.material3.InputChipDefaults
 import androidx.compose.material3.LargeFloatingActionButton
 import androidx.compose.material3.LinearProgressIndicator
-import androidx.compose.material3.MediumTopAppBar
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
@@ -76,6 +77,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
+import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -88,20 +90,25 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import androidx.window.core.layout.WindowHeightSizeClass
+import androidx.window.core.layout.WindowWidthSizeClass
 import com.example.clasetrabajo.R
 import com.example.clasetrabajo.data.model.MenuModel
 import com.example.clasetrabajo.data.model.PostCardModel
 import com.example.clasetrabajo.ui.components.PostCardCompactComponent
 import com.example.clasetrabajo.ui.components.PostCardComponent
+import com.example.clasetrabajo.ui.theme.ClaseTrabajoTheme
 import kotlinx.coroutines.launch
 import java.util.logging.Filter
 
 @Composable
 fun ComponentsScreen(navController: NavHostController){
+
     Adaptive()
     val menuOptions = arrayOf(
         MenuModel(1, "Buttons", "buttons", Icons.Filled.AddCircle),
@@ -116,7 +123,7 @@ fun ComponentsScreen(navController: NavHostController){
         MenuModel(10, "Top app bar", "bar", Icons.Filled.Search)
     )
 
-    var option by rememberSaveable { mutableStateOf("buttons") }
+    var option by rememberSaveable { mutableStateOf("bar") }
     var drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     var scope = rememberCoroutineScope()
 
@@ -220,6 +227,7 @@ fun FloatingButtons(){
 @Composable
 fun Progress(){
     Column(
+
         modifier = Modifier
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -495,6 +503,7 @@ fun AlertDialogs() {
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
+@Preview
 @Composable
 fun Bars(){
     Column(
@@ -504,8 +513,8 @@ fun Bars(){
         //can use MediumTopAppBar and other similar components to change the top bar size.
         TopAppBar(
             colors = TopAppBarDefaults.topAppBarColors(
-                containerColor = Color.Cyan,
-                titleContentColor = Color.Black
+                containerColor = MaterialTheme.colorScheme.primary,
+                titleContentColor = MaterialTheme.colorScheme.secondary
             ),
             title = { Text("Screen Title") },
             actions = {
@@ -517,41 +526,41 @@ fun Bars(){
                 }
                 }
         )
-        /*
-        val arrayPosts = arrayOf(
-            PostCardModel(1, "Title 1", "Text 1", R.drawable.nujabes),
-            PostCardModel(2, "Title 2", "Text 2", R.drawable.nujabes),
-            PostCardModel(3, "Title 3", "Text 3", R.drawable.nujabes),
-            PostCardModel(4, "Title 1", "Text 1", R.drawable.nujabes),
-            PostCardModel(5, "Title 2", "Text 2", R.drawable.nujabes),
-            PostCardModel(6, "Title 3", "Text 3", R.drawable.nujabes),
-            PostCardModel(7, "Title 1", "Text 1", R.drawable.nujabes),
-            PostCardModel(8, "Title 2", "Text 2", R.drawable.nujabes),
-            PostCardModel(9, "Title 3", "Text 3", R.drawable.nujabes)
-        )
-        //can use Lazy Row to do the same but in a horizontal layout
-        LazyVerticalGrid(
-            columns = GridCells.Adaptive(minSize = 100.dp),
-            modifier = Modifier
-                .fillMaxSize()
-                //the 1f value in the .weight modifier is used to spread the components evenly
-                .weight(1f)
-        ) {
-            items(arrayPosts){
-                item -> PostCardComponent(item.id, item.title, item.text, item.image)
-            }
-        }*/
+
+//        val arrayPosts = arrayOf(
+//            PostCardModel(1, "Title 1", "Text 1", R.drawable.nujabes),
+//            PostCardModel(2, "Title 2", "Text 2", R.drawable.nujabes),
+//            PostCardModel(3, "Title 3", "Text 3", R.drawable.nujabes),
+//            PostCardModel(4, "Title 1", "Text 1", R.drawable.nujabes),
+//            PostCardModel(5, "Title 2", "Text 2", R.drawable.nujabes),
+//            PostCardModel(6, "Title 3", "Text 3", R.drawable.nujabes),
+//            PostCardModel(7, "Title 1", "Text 1", R.drawable.nujabes),
+//            PostCardModel(8, "Title 2", "Text 2", R.drawable.nujabes),
+//            PostCardModel(9, "Title 3", "Text 3", R.drawable.nujabes)
+//        )
+//        //can use Lazy Row to do the same but in a horizontal layout
+//        LazyVerticalGrid(
+//            columns = GridCells.Adaptive(minSize = 100.dp),
+//            modifier = Modifier
+//                .fillMaxSize()
+//                //the 1f value in the .weight modifier is used to spread the components evenly
+//                .weight(1f)
+//        ) {
+//            items(arrayPosts){
+//                item -> PostCardComponent(item.id, item.title, item.text, item.image)
+//            }
+//        }
 
         Column(
             modifier = Modifier
                 .weight(1f)
                 .fillMaxSize()
         ){
-
+            Adaptive()
         }
         BottomAppBar(
-            containerColor = Color.LightGray,
-            contentColor = Color.Red,
+            containerColor = MaterialTheme.colorScheme.primary,
+            contentColor = MaterialTheme.colorScheme.secondary
         ){
             IconButton(
                 modifier = Modifier
@@ -604,9 +613,35 @@ fun Adaptive(){
     //Medium Height >= 480dp < 900dp Tablet Landscape Phone Portrait
     // Expanded Height >= 900dp Tablet Portrait
     Column {
-        Text(windowSize.toString())
-        Text(height.toString())
-        Text(width.toString())
+        val arrayPost = arrayOf(
+            PostCardModel(1, "Title 1", "Text 1", R.drawable.nujabes),
+            PostCardModel(2, "Title 2", "Text 2", R.drawable.nujabes),
+            PostCardModel(3, "Title 3", "Text 3", R.drawable.nujabes),
+            PostCardModel(4, "Title 1", "Text 1", R.drawable.nujabes),
+            PostCardModel(5, "Title 2", "Text 2", R.drawable.nujabes),
+            PostCardModel(6, "Title 3", "Text 3", R.drawable.nujabes),
+            PostCardModel(7, "Title 1", "Text 1", R.drawable.nujabes),
+            PostCardModel(8, "Title 2", "Text 2", R.drawable.nujabes),
+            PostCardModel(9, "Title 3", "Text 3", R.drawable.nujabes)
+        )
+        if(width == WindowWidthSizeClass.COMPACT) {
+            LazyVerticalGrid(
+                columns = GridCells.Adaptive(minSize = 100.dp),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .weight(1f)
+            ) {
+                items(arrayPost){
+                    item -> PostCardComponent(item.id, item.title, item.text, item.image)
+                }
+            }
+
+        } else if (height == WindowHeightSizeClass.COMPACT) {
+            LazyColumn {
+                items(arrayPost) { item -> PostCardCompactComponent(item.id, item.title, item.text, item.image) }
+            }
+        }
     }
+
 }
 
