@@ -143,7 +143,7 @@ import java.util.Date
 
 
 @Composable
-fun ComponentsScreen(navController: NavHostController){
+fun ComponentsScreen(navController: NavHostController) {
 
     val menuOptions = arrayOf(
         MenuModel(1, "Buttons", "buttons", Icons.Filled.AddCircle),
@@ -171,62 +171,113 @@ fun ComponentsScreen(navController: NavHostController){
 
     ModalNavigationDrawer(
         drawerState = drawerState,
-        drawerContent = { ModalDrawerSheet{
-        Text("Menu", modifier = Modifier.padding(16.dp))
-            HorizontalDivider()
-            LazyColumn {
-                items(menuOptions) { item ->
-                    NavigationDrawerItem(
-                        icon = { Icon(item.icon, contentDescription = "") },
-                        label = { Text(item.title) },
-                        selected = false,
-                        onClick = {
-                            option = item.option
-                            scope.launch {
-                                drawerState.apply {
-                                    close()
+        drawerContent = {
+            ModalDrawerSheet {
+                Text("Menu", modifier = Modifier.padding(16.dp))
+                HorizontalDivider()
+                LazyColumn {
+                    items(menuOptions) { item ->
+                        NavigationDrawerItem(
+                            icon = { Icon(item.icon, contentDescription = "") },
+                            label = { Text(item.title) },
+                            selected = false,
+                            onClick = {
+                                option = item.option
+                                scope.launch {
+                                    drawerState.apply {
+                                        close()
+                                    }
                                 }
                             }
-                        }
-                    )
+                        )
+                    }
                 }
             }
         }
-        }
     ) {
-        when(option){
-            "buttons" -> { Buttons() }
-            "fbuttons" -> { FloatingButtons() }
-            "prog" -> { Progress() }
-            "chips" -> { Chips() }
-            "slide" -> { Sliders() }
-            "switch" -> { Switches() }
-            "badges" -> { Badges() }
-            "snack" -> { SnackBars() }
-            "alert" -> { AlertDialogs() }
-            "bar" -> { Bars() }
-            "input" -> { InputFields() }
-            "datedocked" -> { DatePickerDockedComposable() }
-            "fieldmod" -> { DatePickerFieldToModalComposable() }
-            "dateinp" -> { DatePickerModalInputComposable() }
-            "daterange" -> { DateRangePickerModalComposable() }
-            "sheet" -> { BottomSheets() }
-            "segbuttons" -> { SegmentedButtons() }
+        when (option) {
+            "buttons" -> {
+                Buttons()
+            }
+
+            "fbuttons" -> {
+                FloatingButtons()
+            }
+
+            "prog" -> {
+                Progress()
+            }
+
+            "chips" -> {
+                Chips()
+            }
+
+            "slide" -> {
+                Sliders()
+            }
+
+            "switch" -> {
+                Switches()
+            }
+
+            "badges" -> {
+                Badges()
+            }
+
+            "snack" -> {
+                SnackBars()
+            }
+
+            "alert" -> {
+                AlertDialogs()
+            }
+
+            "bar" -> {
+                Bars()
+            }
+
+            "input" -> {
+                InputFields()
+            }
+
+            "datedocked" -> {
+                DatePickerDockedComposable()
+            }
+
+            "fieldmod" -> {
+                DatePickerFieldToModalComposable()
+            }
+
+            "dateinp" -> {
+                DatePickerModalInputComposable()
+            }
+
+            "daterange" -> {
+                DateRangePickerModalComposable()
+            }
+
+            "sheet" -> {
+                BottomSheets()
+            }
+
+            "segbuttons" -> {
+                SegmentedButtons()
+            }
 
 
         }
     }
-    }
+}
 
 //@Preview(showBackground = true)
 @Composable
-fun Buttons(){
+fun Buttons() {
     Column(
         modifier = Modifier
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceEvenly
-    ){
+    ) {
         //Button styles
         Button(onClick = {}) {
             Text("Filled")
@@ -249,15 +300,16 @@ fun Buttons(){
         }
     }
 }
+
 //@Preview(showBackground = true)
 @Composable
-fun FloatingButtons(){
+fun FloatingButtons() {
     Column(
         modifier = Modifier
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
-    ){
+    ) {
         FloatingActionButton(onClick = {}) {
             Icon(Icons.Filled.Add, contentDescription = "Add Button")
         }
@@ -274,9 +326,10 @@ fun FloatingButtons(){
         }
     }
 }
+
 //@Preview(showBackground = true)
 @Composable
-fun Progress(){
+fun Progress() {
     Column(
 
         modifier = Modifier
@@ -309,8 +362,8 @@ fun Chips() {
             label = { Text("AssistChip") },
             leadingIcon = {
                 Icon(
-                Icons.Filled.AccountBox,
-                contentDescription = "Assist Chip",
+                    Icons.Filled.AccountBox,
+                    contentDescription = "Assist Chip",
                     modifier = Modifier
                         .size(AssistChipDefaults.IconSize)
                 )
@@ -324,18 +377,18 @@ fun Chips() {
             selected = selected,
             //This will switch the current state
             // of FilterChip to the opposite
-            onClick = {selected = !selected},
-            label = {Text("Filter Chip")},
-            leadingIcon = if(selected){
+            onClick = { selected = !selected },
+            label = { Text("Filter Chip") },
+            leadingIcon = if (selected) {
                 {
-                Icon(
-                    Icons.Filled.AccountBox,
-                    contentDescription = "Assist Chip",
-                    modifier = Modifier
-                        .size(AssistChipDefaults.IconSize)
-                )
-            }
-            }else {
+                    Icon(
+                        Icons.Filled.AccountBox,
+                        contentDescription = "Assist Chip",
+                        modifier = Modifier
+                            .size(AssistChipDefaults.IconSize)
+                    )
+                }
+            } else {
                 null
             }
         )
@@ -346,13 +399,13 @@ fun Chips() {
 
 @Composable
 fun InputChipExample(
-    text:String,
+    text: String,
     onDismiss: () -> Unit
-){
-    var enabled by remember{ mutableStateOf(true) }
-    if(!enabled) return
+) {
+    var enabled by remember { mutableStateOf(true) }
+    if (!enabled) return
     InputChip(
-        label = {Text(text)},
+        label = { Text(text) },
         selected = enabled,
         onClick = {
             onDismiss()
@@ -374,23 +427,24 @@ fun InputChipExample(
         }
     )
 }
+
 //@Preview
 @Composable
-fun Sliders(){
+fun Sliders() {
     Column(
         modifier = Modifier
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceEvenly
 
-    ){
+    ) {
         var SliderPosition by remember { mutableStateOf(50f) }
         Slider(
             value = SliderPosition,
             //updates the slider state according to the users interaction with it
-            onValueChange = {SliderPosition = it},
+            onValueChange = { SliderPosition = it },
             steps = 10,
-            valueRange = 0f .. 100f,
+            valueRange = 0f..100f,
         )
         Text(
             textAlign = TextAlign.Center,
@@ -414,14 +468,14 @@ fun Switches() {
         var checked by remember { mutableStateOf(true) }
         Switch(
             checked = checked,
-            onCheckedChange = {checked = it},
+            onCheckedChange = { checked = it },
         )
-        var checked2 by remember{ mutableStateOf(true) }
+        var checked2 by remember { mutableStateOf(true) }
         Switch(
             checked = checked2,
-            onCheckedChange = {checked2 = it},
+            onCheckedChange = { checked2 = it },
             //adding an icon that will show only when the switch is active
-            thumbContent = if (checked2){
+            thumbContent = if (checked2) {
                 {
                     Icon(
                         Icons.Filled.Check,
@@ -429,17 +483,18 @@ fun Switches() {
                         Modifier.size(InputChipDefaults.AvatarSize)
                     )
                 }
-            }else {
+            } else {
                 null
             }
         )
         var checked3 by remember { mutableStateOf(true) }
         Checkbox(
             checked = checked3,
-            onCheckedChange = {checked3 = it}
+            onCheckedChange = { checked3 = it }
         )
     }
 }
+
 //@Preview
 @Composable
 fun Badges() {
@@ -453,7 +508,7 @@ fun Badges() {
         var itemCount by remember { mutableStateOf(0) }
         BadgedBox(
             badge = {
-                if (itemCount > 0){
+                if (itemCount > 0) {
                     Badge(
                         containerColor = Color.Red,
                         contentColor = Color.White
@@ -470,12 +525,13 @@ fun Badges() {
             )
         }
         Button(
-            onClick = {itemCount++}
+            onClick = { itemCount++ }
         ) {
             Text("Add item")
         }
     }
 }
+
 //@Preview
 @Composable
 fun SnackBars() {
@@ -493,15 +549,16 @@ fun SnackBars() {
 
         SnackbarHost(hostState = snackState)
 
-        fun launchSnackBar(){
+        fun launchSnackBar() {
             snackScope.launch { snackState.showSnackbar("The message was sent") }
         }
         //invoking the previous function in a shorter way
-        Button(::launchSnackBar){
+        Button(::launchSnackBar) {
             Text("Send Message")
         }
     }
 }
+
 @OptIn(ExperimentalMaterial3Api::class)
 //@Preview
 @Composable
@@ -517,9 +574,9 @@ fun AlertDialogs() {
         var selectedOption by remember { mutableStateOf("") }
 
         //without "== true" statement, the conditional is checking for the var to be true
-        if(showAlertDialog){
+        if (showAlertDialog) {
             AlertDialog(
-                icon = {Icon(Icons.Filled.Info, contentDescription = "Info Icon")},
+                icon = { Icon(Icons.Filled.Info, contentDescription = "Info Icon") },
                 title = { Text("Confirm Deletion") },
                 text = { Text("Do you really want to delete this file?") },
                 //to close the dialog when clicking any part of the screen that is not the Alert Dialog
@@ -546,7 +603,7 @@ fun AlertDialogs() {
                 }
             )
         }
-        Button(onClick = {showAlertDialog = true}) {
+        Button(onClick = { showAlertDialog = true }) {
             Text("Delete File")
         }
         Text(selectedOption)
@@ -556,11 +613,11 @@ fun AlertDialogs() {
 @OptIn(ExperimentalMaterial3Api::class)
 //@Preview
 @Composable
-fun Bars(){
+fun Bars() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-    ){
+    ) {
         //can use MediumTopAppBar and other similar components to change the top bar size.
         TopAppBar(
             colors = TopAppBarDefaults.topAppBarColors(
@@ -573,9 +630,12 @@ fun Bars(){
                     Icon(imageVector = Icons.Filled.Search, contentDescription = "Search Button")
                 }
                 IconButton(onClick = {}) {
-                    Icon(imageVector = Icons.Filled.Settings, contentDescription = "Settings Button")
+                    Icon(
+                        imageVector = Icons.Filled.Settings,
+                        contentDescription = "Settings Button"
+                    )
                 }
-                }
+            }
         )
 
 //        val arrayPosts = arrayOf(
@@ -606,13 +666,13 @@ fun Bars(){
             modifier = Modifier
                 .weight(1f)
                 .fillMaxSize()
-        ){
+        ) {
             Adaptive()
         }
         BottomAppBar(
             containerColor = MaterialTheme.colorScheme.primary,
             contentColor = MaterialTheme.colorScheme.secondary
-        ){
+        ) {
             IconButton(
                 modifier = Modifier
                     .weight(1f),
@@ -651,6 +711,7 @@ fun Bars(){
         }
     }
 }
+
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
 fun Adaptive() {
@@ -721,6 +782,7 @@ fun Adaptive() {
         }
     }
 }
+
 @Composable
 fun InputFields() {
     Column(
@@ -752,7 +814,7 @@ fun InputFields() {
             onValueChange = { value = it },
             label = { Text("This is a styled text field") },
             //the max amount of lines to show in the text field at a time
-            maxLines = 1,
+            maxLines = 2,
             textStyle = TextStyle(color = Color.Blue, fontWeight = FontWeight.Bold)
         )
         //using a linear gradient to change the text color in the TextField
@@ -784,13 +846,6 @@ fun InputFields() {
                 mask = '$',
             ),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-        )
-        var input by rememberSaveable { mutableStateOf("") }
-        TextField(
-            value = input,
-            onValueChange = { newText ->
-                input = newText.trimStart { it == '0' }
-            }
         )
     }
 }
@@ -1049,7 +1104,7 @@ fun DateRangePickerModalComposable() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BottomSheets(){
+fun BottomSheets() {
     val scope = rememberCoroutineScope()
     val scaffoldState = rememberBottomSheetScaffoldState()
     var text by remember { mutableStateOf("Go on!") }
@@ -1058,7 +1113,9 @@ fun BottomSheets(){
         sheetPeekHeight = 128.dp,
         sheetContent = {
             Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                Box(Modifier.fillMaxWidth().height(100.dp), contentAlignment = Alignment.Center) {
+                Box(Modifier
+                    .fillMaxWidth()
+                    .height(100.dp), contentAlignment = Alignment.Center) {
                     Text("Swipe up to expand sheet")
                 }
                 Text("Sheet content")
@@ -1067,7 +1124,7 @@ fun BottomSheets(){
                         .padding(bottom = 20.dp),
                     horizontalArrangement = Arrangement.SpaceEvenly,
                     verticalAlignment = Alignment.CenterVertically
-                ){
+                ) {
                     OutlinedTextField(
                         modifier = Modifier
                             .padding(10.dp)
@@ -1076,12 +1133,12 @@ fun BottomSheets(){
                         onValueChange = { text = it },
                         label = { Text("Write something here") }
                     )
-                Button(
-                    modifier = Modifier.padding(10.dp),
-                    onClick = { scope.launch { scaffoldState.bottomSheetState.partialExpand() } }
-                ) {
-                    Text("Collapse")
-                }
+                    Button(
+                        modifier = Modifier.padding(10.dp),
+                        onClick = { scope.launch { scaffoldState.bottomSheetState.partialExpand() } }
+                    ) {
+                        Text("Collapse")
+                    }
 
                 }
             }
@@ -1116,16 +1173,16 @@ fun SegmentedButtons(modifier: Modifier = Modifier) {
     ) {
 
 // allows to select one element at a time
-    SingleChoiceSegmentedButtonRow {
-        sOptions.forEachIndexed { index, label ->
-            SegmentedButton(
-                shape = SegmentedButtonDefaults.itemShape(
-                    index = index,
-                    count = sOptions.size
-                ),
-                onClick = { selectedIndex = index },
-                selected = index == selectedIndex,
-                label = { Text(label) }
+        SingleChoiceSegmentedButtonRow {
+            sOptions.forEachIndexed { index, label ->
+                SegmentedButton(
+                    shape = SegmentedButtonDefaults.itemShape(
+                        index = index,
+                        count = sOptions.size
+                    ),
+                    onClick = { selectedIndex = index },
+                    selected = index == selectedIndex,
+                    label = { Text(label) }
                 )
             }
         }
@@ -1151,21 +1208,25 @@ fun SegmentedButtons(modifier: Modifier = Modifier) {
                                     Icons.Filled.NordicWalking,
                                 contentDescription = "Directions Walk"
                             )
+
                             "Ride" -> Icon(
                                 imageVector =
                                     Icons.Default.BikeScooter,
                                 contentDescription = "Directions Bus"
                             )
+
                             "Drive" -> Icon(
                                 imageVector =
                                     Icons.Default.CarRental,
                                 contentDescription = "Directions Car"
                             )
+
                             "Shop" -> Icon(
                                 imageVector =
                                     Icons.Filled.Shop,
                                 contentDescription = "Shop"
                             )
+
                             "Locked" -> Icon(
                                 imageVector =
                                     Icons.Filled.Lock,
