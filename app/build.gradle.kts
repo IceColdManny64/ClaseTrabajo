@@ -41,6 +41,15 @@ android {
 
 dependencies {
 
+    implementation(libs.androidx.material)
+    implementation(libs.androidx.material.icons.extended)
+    implementation(libs.androidx.foundation)
+    implementation(libs.ui)
+    implementation(libs.androidx.runtime)
+    implementation(libs.material3)
+    implementation(libs.androidx.material3.window.size.class1)
+    implementation(libs.androidx.foundation.layout)
+    implementation(libs.androidx.foundation.layout.android)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -52,6 +61,7 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.navigation.runtime.ktx)
     implementation(libs.androidx.navigation.runtime.android)
+    implementation(libs.androidx.adaptive.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

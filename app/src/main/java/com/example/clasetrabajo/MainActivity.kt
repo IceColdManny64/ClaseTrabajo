@@ -18,8 +18,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -42,10 +46,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.clasetrabajo.ui.screens.AMScreen
+import com.example.clasetrabajo.ui.screens.ComponentsScreen
 import com.example.clasetrabajo.ui.screens.HomeScreen
 import com.example.clasetrabajo.ui.screens.MainMenuScreen
 import com.example.clasetrabajo.ui.screens.TestScreen
 import com.example.clasetrabajo.ui.theme.ClaseTrabajoTheme
+import com.example.clasetrabajo.ui.theme.Red100
+import com.example.clasetrabajo.ui.theme.Red400
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,10 +62,10 @@ class MainActivity : ComponentActivity() {
 
         //screen interface content
         setContent {
-            ComposeMultiScreenApp()
+
             //theme function
             ClaseTrabajoTheme {
-
+                ComposeMultiScreenApp()
             }
         }
     }
@@ -78,6 +85,7 @@ fun SetupNavGraph(navController: NavHostController){
         composable("homeScreen") {HomeScreen(navController) }
         composable("testScreen") {TestScreen(navController) }
         composable("amScreen") { AMScreen(navController) }
+        composable("componentsScreen") { ComponentsScreen(navController) }
 
         }
     }
