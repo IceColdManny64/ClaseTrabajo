@@ -48,6 +48,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.clasetrabajo.ui.screens.AMScreen
 import com.example.clasetrabajo.ui.screens.ComponentsScreen
 import com.example.clasetrabajo.ui.screens.HomeScreen
+import com.example.clasetrabajo.ui.screens.LoginScreen
 import com.example.clasetrabajo.ui.screens.MainMenuScreen
 import com.example.clasetrabajo.ui.screens.TestScreen
 import com.example.clasetrabajo.ui.theme.ClaseTrabajoTheme
@@ -86,7 +87,7 @@ fun SetupNavGraph(navController: NavHostController){
         composable("testScreen") {TestScreen(navController) }
         composable("amScreen") { AMScreen(navController) }
         composable("componentsScreen") { ComponentsScreen(navController) }
-
+        composable("loginScreen") { LoginScreen(navController) }
         }
     }
 
