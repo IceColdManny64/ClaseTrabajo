@@ -32,6 +32,7 @@ fun AccountCardComponent(
     name: String,
     username: String,
     imageURL: String,
+    onButtonClick:() -> Unit
 
 ){
     Card(
@@ -79,7 +80,7 @@ fun AccountCardComponent(
                     IconButton(
                         modifier = Modifier
                             .padding(20.dp, 0.dp, 0.dp, 0.dp),
-                        onClick = {}
+                        onClick = {onButtonClick()}
                     ){
                         Icon(
                             imageVector = Icons.Filled.MoreVert,

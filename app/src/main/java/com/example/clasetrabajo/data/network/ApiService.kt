@@ -7,11 +7,20 @@
     import retrofit2.Response
     import retrofit2.http.Body
     import retrofit2.http.GET
+    import retrofit2.http.Path
 
+    //endpoints
     interface ApiService {
+
+        //json object
         @POST("user")
         suspend fun login(@Body username: UserModel):Response<JsonObject>
 
+        //account list
         @GET("service")
         suspend fun getAccounts():Response<List<AccountModel>>
+
+        //only one element (id)
+        @GET("service/{id}")
+        suspend fun getAccount(@Path("id") id: Int): Response<AccountModel>
     }
