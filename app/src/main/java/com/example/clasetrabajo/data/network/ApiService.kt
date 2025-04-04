@@ -23,4 +23,7 @@
         //only one element (id)
         @GET("service/{id}")
         suspend fun getAccount(@Path("id") id: Int): Response<AccountModel>
+
+        @POST("service")
+        suspend fun addAccount(@Body service: AccountModel): Response<JsonObject>
     }

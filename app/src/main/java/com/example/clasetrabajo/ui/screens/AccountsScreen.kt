@@ -40,7 +40,7 @@ fun AccountsScreen(
     )
     var accountDetail by remember { mutableStateOf<AccountModel?>(null) }
     Column(){
-        TopBarComponent(title = "Account Screen")
+        TopBarComponent(title = "Account Screen", navController, "accountsScreen")
         //Launched effect is used to show animations and other things, in this case it will
         //be used to call the api and manage the interface updates.
         LaunchedEffect(Unit) {
@@ -59,10 +59,12 @@ fun AccountsScreen(
             state = listState
         ){
             items(accounts) { account ->
-                AccountCardComponent(account.id,
+                AccountCardComponent(
+                    account.id,
                     account.name,
                     account.username,
                     account.imageURL,
+
 
                     onButtonClick = {
 
@@ -93,7 +95,8 @@ fun AccountsScreen(
                 accountDetail?.username ?: "",
                 accountDetail?.password ?: "",
                 accountDetail?.imageURL ?: "",
-                accountDetail?.description ?: ""            )
+                accountDetail?.description ?: ""
+            )
         }
     }
 }

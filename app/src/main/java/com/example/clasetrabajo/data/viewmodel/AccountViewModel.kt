@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.clasetrabajo.data.model.AccountModel
+import com.example.clasetrabajo.data.network.ApiService
 import com.example.clasetrabajo.data.network.RetrofitClient
 import com.google.gson.JsonObject
 import kotlinx.coroutines.launch
@@ -33,6 +34,25 @@ class AccountViewModel: ViewModel() {
                 onResult(response)
             } catch (exception: Exception) {
                 Log.d("debug", "API ERROR: $exception")
+            }
+        }
+    }
+    //service is received in backend
+    fun createAccount(service: AccountModel, onResult: (Response:JsonObject?) -> Unit){
+        viewModelScope.launch{
+            try {
+                val response = api.addAccount(service)
+                if(response.isSuccessful){
+                    val jsonResponse = response.body()
+                    Log.d("debug", "${response.body()}" /* or jsonResponse.toString()*/)
+                    onResult(jsonResponse)
+                }else{
+                    Log.d("debug", "ERROR: ${response.body()}")
+                    onResult(null)
+                }
+            }catch (exception: Exception){
+                Log.d("debug", "API CALL FAILED: $exception")
+                onResult(null)
             }
         }
     }
