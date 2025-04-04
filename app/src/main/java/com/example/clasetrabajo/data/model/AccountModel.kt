@@ -8,3 +8,4 @@ data class AccountModel(
     var description: String = "",
     var imageURL: String = ""
 )
+

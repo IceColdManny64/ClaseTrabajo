@@ -13,18 +13,16 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.clasetrabajo.data.model.AccountModel
-import com.example.clasetrabajo.data.model.UserModel
 import com.example.clasetrabajo.data.viewmodel.AccountViewModel
-import com.example.clasetrabajo.data.viewmodel.UserViewModel
 import com.example.clasetrabajo.ui.components.TopBarComponent
 
 @Composable
@@ -79,38 +77,48 @@ fun ManageAccountScreen(
                 .padding(0.dp, 10.dp)
                 .fillMaxWidth(),
             onClick = {
-//                TryCreateAccount(user, username, password, description, context, ViewModel)
+                TryCreateAccount(account, context, viewModel)
             }
         ){
             Text("Save Account")
         }
     }
 }
-//fun TryCreateAccount(
-//    user:String,
-//    username:String,
-//    password:String,
-//    description:String,
-//    context: Context,
-//    viewModel: UserViewModel
-//){
-//    if(user == "" || password == ""){
-//        //requires a context
-//        Toast.makeText(
-//            //will show a message only when both user and password are empty
-//            context,
-//            "User or password cannot be empty",
-//            Toast.LENGTH_SHORT //the message will show for a shorter timespan
-//        ).show()
-//    } else {
-//        val user_model = UserModel(0, "", user, password)
-//        viewModel.loginAPI(user_model){ jsonResponse ->
-//            val loginStatus = jsonResponse?.get("login")?.asString
-//            Log.d("debug", "LOGIN STATUS: $loginStatus")
-//            if(loginStatus == "success"){
-//                navController.nav
-//                igate("accountsScreen")
-//            }
-//        }
-//  }
-//}
+fun TryCreateAccount(
+    accountState: MutableState<AccountModel>,
+    context: Context,
+    viewModel: AccountViewModel
+){
+    val acc = accountState.value
+    if(
+        acc.name.isEmpty() ||
+        acc.username.isEmpty() ||
+        acc.password.isEmpty() ||
+        acc.description.isEmpty()
+        ){
+        //requires a context
+        Toast.makeText(
+            context,
+            "None of the fields can be empty",
+            Toast.LENGTH_SHORT //the message will show for a shorter timespan
+        ).show()
+    } else {
+        viewModel.createAccount(acc){ jsonResponse ->
+            val createAcStatus = jsonResponse?.get("store")?.asString
+            Log.d("debug", "CREATE ACCOUNT STATUS: $createAcStatus")
+            if(createAcStatus == "success"){
+                Toast.makeText(
+                    context,
+                    "Account created successfully",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                Toast.makeText(
+                    context,
+                    "Error creating account",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
+}

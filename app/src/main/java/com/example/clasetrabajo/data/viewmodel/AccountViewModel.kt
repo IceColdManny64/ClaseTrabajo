@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.clasetrabajo.data.model.AccountModel
-import com.example.clasetrabajo.data.network.ApiService
 import com.example.clasetrabajo.data.network.RetrofitClient
 import com.google.gson.JsonObject
 import kotlinx.coroutines.launch
@@ -44,10 +43,10 @@ class AccountViewModel: ViewModel() {
                 val response = api.addAccount(service)
                 if(response.isSuccessful){
                     val jsonResponse = response.body()
-                    Log.d("debug", "${response.body()}" /* or jsonResponse.toString()*/)
+                    Log.d("debug", "$jsonResponse" /* or jsonResponse.toString()*/)
                     onResult(jsonResponse)
                 }else{
-                    Log.d("debug", "ERROR: ${response.body()}")
+                    Log.d("debug", "ERROR: ${response.errorBody()?.string()}")
                     onResult(null)
                 }
             }catch (exception: Exception){
