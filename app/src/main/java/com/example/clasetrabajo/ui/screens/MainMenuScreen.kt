@@ -9,7 +9,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 
 @Composable
@@ -55,7 +54,13 @@ fun MainMenuScreen(navController: NavHostController){
             onClick = {navController.navigate("manageAcScreen")}
         )
         {
-            Text("Go to Login Screen")
+            Text("Go to Add Account Screen")
+        }
+        Button(
+            onClick = {navController.navigate("favAcScreen")}
+        )
+        {
+            Text("Go to Favorites Screen")
         }
     }
 }
