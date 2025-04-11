@@ -1,5 +1,6 @@
 package com.example.clasetrabajo.ui.screens
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,9 +18,12 @@ import androidx.navigation.NavController
 import com.example.clasetrabajo.data.database.AppDatabase
 import com.example.clasetrabajo.data.database.DatabaseProvider
 import com.example.clasetrabajo.data.model.AccountEntity
+import com.example.clasetrabajo.data.model.toAccountEntity
 import com.example.clasetrabajo.ui.components.FavoriteAccountCard
 import com.example.clasetrabajo.ui.components.TopBarComponent
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 @Composable
@@ -47,7 +51,21 @@ fun FavoriteAccountsScreen(navController: NavController) {
                     username = accountdb.username ?: "",
                     password = accountdb.password ?: "",
                     imageURL = accountdb.imageURL ?: "",
-                    description = accountdb.description ?: ""
+                    description = accountdb.description ?: "",
+                    onDeleteClick = {
+                        CoroutineScope(Dispatchers.IO).launch {
+                            try{
+                                accountDao.delete(accountdb)
+                                //update the consult so the deleted element can disappear from screen immediately
+                                accountsdb = withContext(Dispatchers.IO){
+                                    accountDao.getAll()
+                                }
+                                Log.d("debug-db", "Account deleted successfully")
+                            } catch(exception: Exception) {
+                                Log.d("debug-db", "ERROR: $exception")
+                            }
+                        }
+                    }
                 )
             }
         }

@@ -13,6 +13,8 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Bookmark
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -23,8 +25,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.clasetrabajo.R
+import com.example.clasetrabajo.data.model.AccountModel
+import com.example.clasetrabajo.data.viewmodel.AccountViewModel
 
 @Composable
 fun AccountDetailCardComponent(
@@ -34,7 +40,8 @@ fun AccountDetailCardComponent(
     password: String,
     imageURL: String,
     description: String,
-    onSaveClick: () -> Unit
+    onSaveClick: () -> Unit,
+    navController: NavController
 ){
     Column(modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
         Row(
@@ -58,7 +65,7 @@ fun AccountDetailCardComponent(
 
             ) {
             Column(
-                verticalArrangement = Arrangement.Center,
+                verticalArrangement = Arrangement.SpaceEvenly,
                 horizontalAlignment = Alignment.CenterHorizontally
             ){
                 Text(modifier = Modifier.padding(10.dp),
@@ -77,23 +84,32 @@ fun AccountDetailCardComponent(
                     text= description,
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Light)
-                IconButton(
-                    modifier = Modifier
-                        .padding(20.dp, 0.dp, 0.dp, 0.dp)
-                        .background(MaterialTheme.colorScheme.secondary),
-                    onClick = {
-                        onSaveClick()
-                    },
-                ) {
-                    Row(verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center){
-                    Text(text = "Save as favorite", textAlign = TextAlign.Center)
-                    Icon(imageVector = Icons.Filled.Add,
-                        contentDescription = "Add")
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween) {
+                    IconButton(
+                        modifier = Modifier
+                            .background(MaterialTheme.colorScheme.secondary),
+                        onClick = {
+                            onSaveClick()
+                        },
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.Bookmark,
+                            contentDescription = "Add"
+                        )
+                    }
+                        IconButton(
+                            modifier = Modifier
+                                .background(MaterialTheme.colorScheme.secondary),
+                            onClick = {
+                                navController.navigate("manageAcScreen/${id}")
+                            }
+                        ) {
+                            Icon(imageVector = Icons.Filled.Edit, contentDescription = "Update")
+                        }
                     }
                 }
-            }
             }
         }
     }
 }
+

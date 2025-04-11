@@ -118,7 +118,8 @@ fun AccountsScreen(
                         }
                     }
                     showBottomSheet = false
-                }
+                },
+                navController
             )
         }
     }

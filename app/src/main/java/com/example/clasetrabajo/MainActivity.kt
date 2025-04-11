@@ -9,6 +9,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.clasetrabajo.data.database.AppDatabase
 import com.example.clasetrabajo.data.database.DatabaseProvider
 import com.example.clasetrabajo.ui.screens.AMScreen
@@ -20,6 +21,7 @@ import com.example.clasetrabajo.ui.screens.LoginScreen
 import com.example.clasetrabajo.ui.screens.MainMenuScreen
 import com.example.clasetrabajo.ui.screens.ManageAccountScreen
 import com.example.clasetrabajo.ui.screens.TestScreen
+import com.example.clasetrabajo.ui.screens.TryCreateAccount
 import com.example.clasetrabajo.ui.theme.ClaseTrabajoTheme
 
 class MainActivity : ComponentActivity() {
@@ -64,7 +66,17 @@ fun SetupNavGraph(navController: NavHostController){
         composable("componentsScreen") { ComponentsScreen(navController) }
         composable("loginScreen") { LoginScreen(navController) }
         composable("accountsScreen"){ AccountsScreen(navController) }
-        composable("manageAcScreen"){ ManageAccountScreen(navController) }
+        composable("manageAcScreen") { ManageAccountScreen(navController = navController) }
+        composable(
+                route = "manageAcScreen/{id}",
+        arguments = listOf(navArgument("id") { defaultValue = -1 })
+        ) { backStackEntry ->
+        val id = backStackEntry.arguments?.getString("id")?.toIntOrNull() ?: -1
+        ManageAccountScreen(
+            navController = navController,
+            accountId = id // <-- aquí es importante nombrarlo
+        )
+    }
         composable("favAcScreen"){ FavoriteAccountsScreen(navController) }
         }
     }

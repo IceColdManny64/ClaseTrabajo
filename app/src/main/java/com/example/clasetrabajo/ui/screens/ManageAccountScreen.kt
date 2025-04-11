@@ -13,6 +13,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -28,96 +29,107 @@ import com.example.clasetrabajo.ui.components.TopBarComponent
 @Composable
 fun ManageAccountScreen(
     navController: NavController,
+    accountId: Int? = null, // 👈 Esto indica si viene de editar
     viewModel: AccountViewModel = viewModel()
 ){
     val account = remember { mutableStateOf(AccountModel()) }
     val context = LocalContext.current
+
+    // Si accountId no es nulo, cargamos la cuenta para editar
+    LaunchedEffect(accountId) {
+        accountId?.let {
+            viewModel.getAccount(it) { response ->
+                if (response.isSuccessful) {
+                    account.value = response.body() ?: AccountModel()
+                } else {
+                    Toast.makeText(context, "Error loading account", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
     Column(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.background)
             .padding(10.dp)
             .fillMaxSize()
     ){
-        TopBarComponent("Add Account", navController, "manageAcScreen")
+        TopBarComponent("Add/Update Account", navController, "manageAcScreen")
 
+        // Campos
         OutlinedTextField(
-            modifier = Modifier
-                .fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             value = account.value.name,
-            maxLines = 1,
-            onValueChange = {account.value = account.value.copy(name = it)},
-            label = {Text("Account Name")},
+            onValueChange = { account.value = account.value.copy(name = it) },
+            label = { Text("Account Name") }
         )
         OutlinedTextField(
-            modifier = Modifier
-                .fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             value = account.value.username,
-            maxLines = 1,
-            onValueChange = {account.value = account.value.copy(username = it)},
-            label = {Text("Account Username")},
+            onValueChange = { account.value = account.value.copy(username = it) },
+            label = { Text("Account Username") }
         )
         OutlinedTextField(
-            modifier = Modifier
-                .fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             value = account.value.password,
-            maxLines = 1,
-            onValueChange = {account.value = account.value.copy(password = it)},
-            label = {Text("Account Password")},
+            onValueChange = { account.value = account.value.copy(password = it) },
+            label = { Text("Account Password") }
         )
         OutlinedTextField(
-            modifier = Modifier
-                .fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             value = account.value.description,
-            maxLines = 1,
-            onValueChange = {account.value = account.value.copy(description = it)},
-            label = {Text("Account Description")},
+            onValueChange = { account.value = account.value.copy(description = it) },
+            label = { Text("Account Description") }
         )
         FilledTonalButton(
             modifier = Modifier
                 .padding(0.dp, 10.dp)
                 .fillMaxWidth(),
             onClick = {
-                TryCreateAccount(account, context, viewModel)
+                TryCreateAccount(account, context, viewModel, accountId)
             }
         ){
             Text("Save Account")
         }
     }
 }
+
 fun TryCreateAccount(
     accountState: MutableState<AccountModel>,
     context: Context,
-    viewModel: AccountViewModel
+    viewModel: AccountViewModel,
+    accountId: Int? // 👈 aquí usamos esto para decidir
 ){
     val acc = accountState.value
-    if(
+
+    if (
         acc.name.isEmpty() ||
         acc.username.isEmpty() ||
         acc.password.isEmpty() ||
         acc.description.isEmpty()
-        ){
-        //requires a context
-        Toast.makeText(
-            context,
-            "None of the fields can be empty",
-            Toast.LENGTH_SHORT //the message will show for a shorter timespan
-        ).show()
-    } else {
-        viewModel.createAccount(acc){ jsonResponse ->
+    ) {
+        Toast.makeText(context, "None of the fields can be empty", Toast.LENGTH_SHORT).show()
+        return
+    }
+
+    if (accountId == null) {
+        // Crear cuenta
+        viewModel.createAccount(acc) { jsonResponse ->
             val createAcStatus = jsonResponse?.get("store")?.asString
-            Log.d("debug", "CREATE ACCOUNT STATUS: $createAcStatus")
-            if(createAcStatus == "success"){
-                Toast.makeText(
-                    context,
-                    "Account created successfully",
-                    Toast.LENGTH_SHORT
-                ).show()
+            if (createAcStatus == "success") {
+                Toast.makeText(context, "Account created successfully", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(
-                    context,
-                    "Error creating account",
-                    Toast.LENGTH_SHORT
-                ).show()
+                Toast.makeText(context, "Error creating account", Toast.LENGTH_SHORT).show()
+            }
+        }
+    } else {
+        // Actualizar cuenta
+        viewModel.updateAccount(accountId, acc) { jsonResponse ->
+            val updateAcStatus = jsonResponse?.get("update")?.asString
+            if (updateAcStatus == "success") {
+                Toast.makeText(context, "Account updated successfully", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(context, "Error updating account", Toast.LENGTH_SHORT).show()
             }
         }
     }
