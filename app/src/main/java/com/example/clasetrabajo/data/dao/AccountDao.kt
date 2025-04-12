@@ -17,6 +17,4 @@ interface AccountDao {
 
     @Delete
     fun delete(account: AccountEntity)
-
-
 }

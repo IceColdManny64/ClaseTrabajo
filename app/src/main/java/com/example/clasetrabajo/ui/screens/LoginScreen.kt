@@ -44,7 +44,7 @@ fun LoginScreen(navController: NavHostController){
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
+            .background(MaterialTheme.colorScheme.secondary)
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceEvenly
@@ -59,7 +59,7 @@ fun LoginForm(navController: NavController, ViewModel: UserViewModel = viewModel
     Card(
         colors = CardDefaults.cardColors(
             contentColor = Color.White,
-            containerColor = MaterialTheme.colorScheme.surface
+            containerColor = MaterialTheme.colorScheme.tertiary
         ),
         modifier = Modifier
             .padding(40.dp, 0.dp)
@@ -166,6 +166,12 @@ fun TryLogin(
             Log.d("debug", "LOGIN STATUS: $loginStatus")
             if(loginStatus == "success"){
                 navController.navigate("accountsScreen")
+            } else {
+                Toast.makeText(
+                    context,
+                    "Failed login, check your credentials",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }

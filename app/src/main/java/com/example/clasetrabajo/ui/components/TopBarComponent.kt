@@ -15,10 +15,6 @@ import androidx.navigation.NavController
 @Composable
 fun TopBarComponent(title: String, navController: NavController, location:String ){
     TopAppBar(
-//        colors = TopAppBarDefaults.topAppBarColors(
-//            containerColor = MaterialTheme.colorScheme.primary,
-//            titleContentColor = MaterialTheme.colorScheme.secondary
-//        ),
         title = {Text(title)},
         actions = {
             if (location == "accountsScreen") {

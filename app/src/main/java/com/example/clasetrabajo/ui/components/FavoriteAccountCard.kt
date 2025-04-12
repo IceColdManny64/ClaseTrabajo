@@ -1,5 +1,6 @@
 package com.example.clasetrabajo.ui.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,11 +11,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.DeleteForever
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,16 +37,18 @@ fun FavoriteAccountCard(
     description: String,
     onDeleteClick: () -> Unit
 ) {
-    Text("Hola")
+
     Card(
         modifier = Modifier
             .padding(10.dp)
             .fillMaxWidth()
+
     ) {
         Row(
             modifier = Modifier
-                .padding(10.dp)
-                .fillMaxWidth(),
+                .padding(5.dp)
+                .fillMaxWidth()
+                .background(MaterialTheme.colorScheme.background),
             verticalAlignment = Alignment.CenterVertically
         ) {
             AsyncImage(

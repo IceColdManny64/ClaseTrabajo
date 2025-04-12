@@ -1,6 +1,7 @@
 package com.example.clasetrabajo.ui.screens
 
 import android.util.Log
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -47,7 +48,10 @@ fun AccountsScreen(
     var accountDetail by remember { mutableStateOf<AccountModel?>(null) }
     val db: AppDatabase = DatabaseProvider.getDatabase(LocalContext.current)
     val accountDao = db.accountDao()
-    Column(){
+    Column(
+        modifier = Modifier
+            .background(MaterialTheme.colorScheme.background)
+    ){
         TopBarComponent(title = "Account Screen", navController, "accountsScreen")
         //Launched effect is used to show animations and other things, in this case it will
         //be used to call the api and manage the interface updates.

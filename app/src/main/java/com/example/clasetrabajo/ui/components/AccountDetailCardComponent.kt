@@ -12,7 +12,6 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.MaterialTheme
@@ -22,15 +21,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.clasetrabajo.R
-import com.example.clasetrabajo.data.model.AccountModel
-import com.example.clasetrabajo.data.viewmodel.AccountViewModel
 
 @Composable
 fun AccountDetailCardComponent(
@@ -86,8 +81,6 @@ fun AccountDetailCardComponent(
                     fontWeight = FontWeight.Light)
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween) {
                     IconButton(
-                        modifier = Modifier
-                            .background(MaterialTheme.colorScheme.secondary),
                         onClick = {
                             onSaveClick()
                         },
@@ -98,8 +91,6 @@ fun AccountDetailCardComponent(
                         )
                     }
                         IconButton(
-                            modifier = Modifier
-                                .background(MaterialTheme.colorScheme.secondary),
                             onClick = {
                                 navController.navigate("manageAcScreen/${id}")
                             }

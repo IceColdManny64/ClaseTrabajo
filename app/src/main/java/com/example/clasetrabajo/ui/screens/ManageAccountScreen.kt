@@ -1,7 +1,6 @@
 package com.example.clasetrabajo.ui.screens
 
 import android.content.Context
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -29,7 +28,7 @@ import com.example.clasetrabajo.ui.components.TopBarComponent
 @Composable
 fun ManageAccountScreen(
     navController: NavController,
-    accountId: Int? = null, // 👈 Esto indica si viene de editar
+    accountId: Int? = null,
     viewModel: AccountViewModel = viewModel()
 ){
     val account = remember { mutableStateOf(AccountModel()) }
@@ -41,8 +40,6 @@ fun ManageAccountScreen(
             viewModel.getAccount(it) { response ->
                 if (response.isSuccessful) {
                     account.value = response.body() ?: AccountModel()
-                } else {
-                    Toast.makeText(context, "Error loading account", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -81,6 +78,7 @@ fun ManageAccountScreen(
             onValueChange = { account.value = account.value.copy(description = it) },
             label = { Text("Account Description") }
         )
+
         FilledTonalButton(
             modifier = Modifier
                 .padding(0.dp, 10.dp)
@@ -89,7 +87,17 @@ fun ManageAccountScreen(
                 TryCreateAccount(account, context, viewModel, accountId)
             }
         ){
-            Text("Save Account")
+            Text("Save/Update Account")
+        }
+        if(accountId != null){
+        FilledTonalButton(
+            modifier = Modifier
+                .padding(0.dp, 10.dp)
+                .fillMaxWidth(),
+            onClick = {TryDeleteAccount(context, viewModel, accountId)}
+        ){
+            Text("Delete Account")
+        }
         }
     }
 }
@@ -98,7 +106,7 @@ fun TryCreateAccount(
     accountState: MutableState<AccountModel>,
     context: Context,
     viewModel: AccountViewModel,
-    accountId: Int? // 👈 aquí usamos esto para decidir
+    accountId: Int?
 ){
     val acc = accountState.value
 
@@ -113,7 +121,6 @@ fun TryCreateAccount(
     }
 
     if (accountId == null) {
-        // Crear cuenta
         viewModel.createAccount(acc) { jsonResponse ->
             val createAcStatus = jsonResponse?.get("store")?.asString
             if (createAcStatus == "success") {
@@ -123,7 +130,6 @@ fun TryCreateAccount(
             }
         }
     } else {
-        // Actualizar cuenta
         viewModel.updateAccount(accountId, acc) { jsonResponse ->
             val updateAcStatus = jsonResponse?.get("update")?.asString
             if (updateAcStatus == "success") {
@@ -131,6 +137,21 @@ fun TryCreateAccount(
             } else {
                 Toast.makeText(context, "Error updating account", Toast.LENGTH_SHORT).show()
             }
+        }
+    }
+}
+
+fun TryDeleteAccount(
+    context: Context,
+    viewModel: AccountViewModel,
+    accountId: Int
+){
+    viewModel.deleteAccount(accountId) { jsonResponse ->
+        val deleteAcStatus = jsonResponse?.get("delete")?.asString
+        if (deleteAcStatus == "success") {
+            Toast.makeText(context, "Account deleted successfully", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(context, "Error deleting account", Toast.LENGTH_SHORT).show()
         }
     }
 }

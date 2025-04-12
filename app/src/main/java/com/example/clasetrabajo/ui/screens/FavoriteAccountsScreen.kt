@@ -1,11 +1,13 @@
 package com.example.clasetrabajo.ui.screens
 
 import android.util.Log
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -18,7 +20,6 @@ import androidx.navigation.NavController
 import com.example.clasetrabajo.data.database.AppDatabase
 import com.example.clasetrabajo.data.database.DatabaseProvider
 import com.example.clasetrabajo.data.model.AccountEntity
-import com.example.clasetrabajo.data.model.toAccountEntity
 import com.example.clasetrabajo.ui.components.FavoriteAccountCard
 import com.example.clasetrabajo.ui.components.TopBarComponent
 import kotlinx.coroutines.CoroutineScope
@@ -38,7 +39,8 @@ fun FavoriteAccountsScreen(navController: NavController) {
         }
     }
 
-    Column {
+    Column(modifier = Modifier.background(MaterialTheme.colorScheme.tertiary)) {
+        TopBarComponent("Favorite Accounts", navController, "favAcScreen")
         val listState = rememberLazyListState()
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
