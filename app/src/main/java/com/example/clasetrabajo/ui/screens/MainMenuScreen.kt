@@ -60,5 +60,11 @@ fun MainMenuScreen(navController: NavHostController){
         {
             Text("Go to Login Screen")
         }
+        Button(
+            onClick = {navController.navigate("camScreen")}
+        )
+        {
+            Text("Go to Camera")
+        }
     }
 }

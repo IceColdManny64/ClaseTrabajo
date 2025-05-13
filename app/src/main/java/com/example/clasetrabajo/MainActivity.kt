@@ -14,6 +14,7 @@ import com.example.clasetrabajo.data.database.AppDatabase
 import com.example.clasetrabajo.data.database.DatabaseProvider
 import com.example.clasetrabajo.ui.screens.AMScreen
 import com.example.clasetrabajo.ui.screens.AccountsScreen
+import com.example.clasetrabajo.ui.screens.Camera
 import com.example.clasetrabajo.ui.screens.ComponentsScreen
 import com.example.clasetrabajo.ui.screens.FavoriteAccountsScreen
 import com.example.clasetrabajo.ui.screens.HomeScreen
@@ -78,6 +79,7 @@ fun SetupNavGraph(navController: NavHostController){
         )
     }
         composable("favAcScreen"){ FavoriteAccountsScreen(navController) }
+        composable("camScreen") { Camera(navController) }
         }
     }
 
