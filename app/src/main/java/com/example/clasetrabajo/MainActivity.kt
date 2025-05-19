@@ -1,7 +1,9 @@
 package com.example.clasetrabajo
 
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
@@ -10,6 +12,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import androidx.navigation.navDeepLink
 import com.example.clasetrabajo.data.database.AppDatabase
 import com.example.clasetrabajo.data.database.DatabaseProvider
 import com.example.clasetrabajo.ui.screens.AMScreen
@@ -22,6 +25,7 @@ import com.example.clasetrabajo.ui.screens.HomeScreen
 import com.example.clasetrabajo.ui.screens.LoginScreen
 import com.example.clasetrabajo.ui.screens.MainMenuScreen
 import com.example.clasetrabajo.ui.screens.ManageAccountScreen
+import com.example.clasetrabajo.ui.screens.NotificationScreen
 import com.example.clasetrabajo.ui.screens.TestScreen
 import com.example.clasetrabajo.ui.screens.TryCreateAccount
 import com.example.clasetrabajo.ui.theme.ClaseTrabajoTheme
@@ -50,7 +54,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-} //Close class
+}//Close class
 @Composable
 fun ComposeMultiScreenApp(){
     val navController = rememberNavController()
@@ -69,6 +73,13 @@ fun SetupNavGraph(navController: NavHostController){
         composable("loginScreen") { LoginScreen(navController) }
         composable("accountsScreen"){ AccountsScreen(navController) }
         composable("manageAcScreen") { ManageAccountScreen(navController = navController) }
+        composable(
+            route = "notifScreen",
+            deepLinks = listOf(navDeepLink { uriPattern = "app://notificacion" })
+        ) {
+            NotificationScreen(navController)
+        }
+
         composable(
                 route = "manageAcScreen/{id}",
         arguments = listOf(navArgument("id") { defaultValue = -1 })

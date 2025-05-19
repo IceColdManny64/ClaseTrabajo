@@ -72,5 +72,12 @@ fun MainMenuScreen(navController: NavHostController){
         {
             Text("Go to Calendar")
         }
+        Button(
+            onClick = {navController.navigate("notifScreen")}
+        )
+        {
+            Text("Go to Notifications")
+        }
+
     }
 }

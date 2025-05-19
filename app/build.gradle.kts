@@ -89,6 +89,10 @@ dependencies {
         implementation(libs.kotlinx.serialization.json)
         implementation(libs.converter.gson)
 
+        // WorkManager
+        implementation("androidx.work:work-runtime-ktx:2.10.1")
+        implementation ("androidx.work:work-runtime:2.10.1")
+
         //Camera
         val cameraxVersion = "1.3.1"
         implementation("androidx.camera:camera-core:$cameraxVersion")//base
