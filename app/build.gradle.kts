@@ -79,6 +79,8 @@ dependencies {
         implementation("androidx.room:room-ktx:$room_version")
         ksp("androidx.room:room-compiler:$room_version")
 
+        implementation ("androidx.biometric:biometric:1.2.0-alpha05")
+
         // Coil (para imágenes)
         implementation(libs.coil.compose)
 

@@ -2,9 +2,12 @@ package com.example.clasetrabajo
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.fragment.app.FragmentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -14,6 +17,7 @@ import com.example.clasetrabajo.data.database.AppDatabase
 import com.example.clasetrabajo.data.database.DatabaseProvider
 import com.example.clasetrabajo.ui.screens.AMScreen
 import com.example.clasetrabajo.ui.screens.AccountsScreen
+import com.example.clasetrabajo.ui.screens.BiometricScreen
 import com.example.clasetrabajo.ui.screens.Calendar
 import com.example.clasetrabajo.ui.screens.Camera
 import com.example.clasetrabajo.ui.screens.ComponentsScreen
@@ -26,7 +30,7 @@ import com.example.clasetrabajo.ui.screens.TestScreen
 import com.example.clasetrabajo.ui.screens.TryCreateAccount
 import com.example.clasetrabajo.ui.theme.ClaseTrabajoTheme
 
-class MainActivity : ComponentActivity() {
+class MainActivity : FragmentActivity() {
     lateinit var database: AppDatabase
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,6 +86,13 @@ fun SetupNavGraph(navController: NavHostController){
         composable("favAcScreen"){ FavoriteAccountsScreen(navController) }
         composable("camScreen") { Camera(navController) }
         composable("calScreen") {Calendar(navController)}
+        composable("biometric_screen") {
+            val context = LocalContext.current
+            BiometricScreen(navController, onAuthSuccess = {
+                Toast.makeText(context, "¡Autenticación exitosa!", Toast.LENGTH_SHORT).show()
+            })
         }
+
+    }
     }
 
