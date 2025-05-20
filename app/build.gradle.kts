@@ -79,6 +79,8 @@ dependencies {
         implementation("androidx.room:room-ktx:$room_version")
         ksp("androidx.room:room-compiler:$room_version")
 
+        implementation ("androidx.biometric:biometric:1.2.0-alpha05")
+
         // Coil (para imágenes)
         implementation(libs.coil.compose)
 
@@ -88,6 +90,17 @@ dependencies {
         implementation(libs.okhttp)
         implementation(libs.kotlinx.serialization.json)
         implementation(libs.converter.gson)
+
+        //Camera
+        val cameraxVersion = "1.3.1"
+        implementation("androidx.camera:camera-core:$cameraxVersion")//base
+        implementation("androidx.camera:camera-camera2:$cameraxVersion")// Conexión con la API Camera2
+        implementation("androidx.camera:camera-lifecycle:$cameraxVersion")
+        implementation("androidx.camera:camera-view:$cameraxVersion") // Necesario para la prewiew
+        implementation("androidx.navigation:navigation-compose:2.7.7")
+        implementation ("com.google.accompanist:accompanist-permissions:0.34.0")
+        implementation("androidx.camera:camera-video:$cameraxVersion")
+        implementation ("io.coil-kt:coil-compose:2.2.2")
 
         // Tests
         testImplementation(libs.junit)
